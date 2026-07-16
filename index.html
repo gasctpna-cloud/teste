@@ -3,312 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TESTE - DESIGNER FODA</title>
+    <title>INTEGRA - Acesso Corporativo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* Reset & Base */
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
-        
+
         body, html {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #050508;
-            font-family: 'Courier New', Courier, monospace;
+            background: #060a12;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #fff;
         }
 
-        /* Perspective Grid Background */
-        .grid {
+        /* Canvas para o Shader de Aurora Iridescente */
+        #aurora-canvas {
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform: rotateX(65deg) translateY(-30%) translateZ(-100px);
-            perspective: 1000px;
-            animation: grid-move 12s linear infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1;
         }
 
-        @keyframes grid-move {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 800px; }
-        }
-
-        /* Layout Container */
-        .container {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Container Principal (Responsivo e Ultra Premium) */
+        .wrapper {
+            position: relative;
             width: 100%;
-            height: 100%;
+            max-width: 1000px;
+            display: flex;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            margin: 20px;
             z-index: 10;
+        }
+
+        /* Lado Esquerdo: Área da Identidade Visual */
+        .canvas-container {
+            flex: 1.1;
+            position: relative;
+            background: rgba(10, 15, 30, 0.6);
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            pointer-events: none;
-        }
-
-        /* 3D Canvas with Retro Pixel Rendering */
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            image-rendering: pixelated; /* Fuerza renderizado retro */
-        }
-
-        /* Typography */
-        .title-container {
-            text-align: center;
-            text-transform: uppercase;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
+            padding: 60px 40px;
+            overflow: hidden;
         }
 
-        h1 {
-            font-size: 15vw;
-            font-weight: 900;
-            letter-spacing: -0.05em;
-            color: transparent;
-            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
-            text-shadow: 0 0 30px rgba(255, 0, 128, 0.3);
-            line-height: 0.8;
-            margin: 20px 0;
-            font-family: Arial, sans-serif; /* Helvetica/Arial brutalist vibe */
-        }
-
-        .subtitle {
-            font-size: 14px;
-            letter-spacing: 0.8em;
-            color: #ff007f;
-            text-shadow: 0 0 10px #ff007f;
-            font-weight: bold;
-        }
-
-        .subtitle-blue {
-            font-size: 12px;
-            letter-spacing: 0.6em;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
-            font-weight: bold;
-        }
-
-        /* CRT TV Scanline overlay */
-        .scanlines {
+        /* Degradê de Vinheta interno */
+        .canvas-container::before {
+            content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(
-                rgba(18, 16, 16, 0) 50%, 
-                rgba(0, 0, 0, 0.3) 50%
-            );
-            background-size: 100% 4px;
-            z-index: 20;
+            background: radial-gradient(circle at center, rgba(15, 23, 42, 0) 30%, rgba(15, 23, 42, 0.7) 100%);
+            z-index: 2;
             pointer-events: none;
         }
+
+        /* A ÁRVORE COLORIDA VETORIAL (SVG INLINE) */
+        .original-logo {
+            width: 160px;
+            height: 160px;
+            z-index: 5;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 15px 30px rgba(249, 115, 22, 0.35));
+            transform: perspective(800px) rotateY(-5deg);
+            animation: floatTree 4s ease-in-out infinite;
+        }
+
+        @keyframes floatTree {
+            0%, 100% { transform: perspective(800px) rotateY(-5deg) translateY(0); }
+            50% { transform: perspective(800px) rotateY(-5deg) translateY(-8px); }
+        }
+
+        .brand-info {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+        }
+
+        /* Título INTEGRA */
+        .brand-info h1 {
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #f97316 0%, #eab308 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-info p {
+            color: #94a3b8;
+            font-size: 14px;
+            max-width: 320px;
+            line-height: 1.6;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* Lado Direito: Formulário de Login (Limpo, Sério e Altamente Legível) */
+        .login-container {
+            flex: 1;
+            background: #ffffff;
+            padding: 70px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 6;
+        }
+
+        .login-header {
+            margin-bottom: 40px;
+        }
+
+        .login-header h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        .login-header p {
+            font-size: 15px;
+            color: #64748b;
+            margin-top: 6px;
+        }
+
+        /* Inputs e Labels */
+        .form-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 16px 18px;
+            font-size: 15px;
+            background-color: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            color: #0f172a;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            background-color: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.12);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+        }
+
+        .forgot-password {
+            font-size: 13px;
+            font-weight: 500;
+            color: #2563eb;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .forgot-password:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* Botão de Ação */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #2563eb;
+            border: none;
+            border-radius: 14px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-submit:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Rodapé */
+        .footer {
+            margin-top: auto;
+            padding-top: 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #94a3b8;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- RESPONSIVIDADE ADAPTATIVA --- */
+        @media (max-width: 900px) {
+            .wrapper {
+                max-width: 450px;
+                height: auto;
+                flex-direction: column;
+                margin: 16px;
+                border-radius: 28px;
+            }
+
+            .canvas-container {
+                padding: 45px 30px;
+            }
+            
+            .login-container {
+                padding: 45px 30px;
+            }
+            
+            .original-logo {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 15px;
+            }
+            
+            .brand-info h1 {
+                font-size: 32px;
+            }
+        }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <div class="grid"></div>
-    <div class="scanlines"></div>
-    
-    <div class="container">
-        <div class="title-container">
-            <p class="subtitle">PROJECT_01</p>
-            <h1>TESTE</h1>
-            <p class="subtitle-blue">PIXEL ART 3D ENGINE</p>
+
+    <canvas id="aurora-canvas"></canvas>
+
+    <div class="wrapper">
+        <div class="canvas-container">
+            
+            <svg class="original-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 160 C100 135, 96 125, 92 110 C88 95, 85 90, 75 85 C85 82, 92 75, 94 65 C95 75, 100 80, 106 80 C112 80, 118 85, 122 92 C115 98, 110 110, 108 160 Z" fill="#2d3748" />
+                <path d="M92 110 C80 105, 68 105, 58 110 C68 100, 80 98, 90 98 Z" fill="#2d3748" />
+                <path d="M108 110 C120 105, 132 105, 142 110 C132 100, 120 98, 110 98 Z" fill="#2d3748" />
+                
+                <path d="M92 65 C80 58, 70 42, 80 28 C92 35, 96 50, 92 65 Z" fill="#f97316" />
+                <path d="M75 85 C60 80, 48 68, 55 52 C68 55, 73 70, 75 85 Z" fill="#ea580c" />
+                <path d="M58 110 C42 105, 30 90, 38 75 C50 80, 55 95, 58 110 Z" fill="#eab308" />
+                
+                <path d="M100 50 C100 32, 92 20, 100 8 C108 20, 108 32, 100 50 Z" fill="#a3e635" />
+                <path d="M108 65 C120 58, 130 42, 120 28 C108 35, 104 50, 108 65 Z" fill="#10b981" />
+                <path d="M125 85 C140 80, 152 68, 145 52 C132 55, 127 70, 125 85 Z" fill="#06b6d4" />
+                <path d="M142 110 C158 105, 170 90, 162 75 C150 80, 145 95, 142 110 Z" fill="#3b82f6" />
+            </svg>
+            
+            <div class="brand-info">
+                <h1>INTEGRA</h1>
+                <p>O ecossistema inteligente de gestão administrativa e análise de dados corporativos.</p>
+            </div>
+        </div>
+
+        <div class="login-container">
+            <div class="login-header">
+                <h2>Acesso Restrito</h2>
+                <p>Insira suas credenciais administrativas</p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); alert('Tentativa de conexão enviada!');">
+                <div class="form-group">
+                    <label for="username">Usuário ou E-mail corporativo</label>
+                    <input type="text" id="username" class="form-control" placeholder="ex: nome@ibrase.com.br" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha de segurança</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                </div>
+
+                <div class="form-options">
+                    <a href="#" class="forgot-password">Esqueci minha senha</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Entrar no Sistema</button>
+            </form>
+
+            <div class="footer">
+                <p>© 2026 INTEGRA SYSTEMS. TODOS OS DIREITOS RESERVADOS.</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Setup Inicial da Cena
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 4, 13);
-        camera.lookAt(0, 0, 0);
+        const canvas = document.getElementById('aurora-canvas');
+        const gl = canvas.getContext('webgl');
 
-        // WebGL Renderer com baixa resolução intencional para efeito "Pixel"
-        const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
-        const pixelScale = 0.25; // Renderiza a 25% da tela e estica para pixelar
-        renderer.setSize(window.innerWidth * pixelScale, window.innerHeight * pixelScale, false);
-        renderer.domElement.style.width = '100%';
-        renderer.domElement.style.height = '100%';
-        document.body.appendChild(renderer.domElement);
+        if (!gl) {
+            document.body.style.background = "#060a12";
+        }
 
-        // Iluminação de Estúdio Cyberpunk
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
+        function resizeCanvas() {
+            canvas.width = window.innerWidth * window.devicePixelRatio;
+            canvas.height = window.innerHeight * window.devicePixelRatio;
+            if (gl) gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-        const pinkLight = new THREE.DirectionalLight(0xff00ff, 1.2);
-        pinkLight.position.set(5, 5, 5);
-        scene.add(pinkLight);
+        if (gl) {
+            const vsSource = `attribute vec4 aVertexPosition; void main() { gl_Position = aVertexPosition; }`;
+            const fsSource = `
+                precision highp float;
+                uniform float uTime;
+                uniform vec2 uResolution;
 
-        const cyanLight = new THREE.DirectionalLight(0x00ffff, 1.2);
-        cyanLight.position.set(-5, -3, 2);
-        scene.add(cyanLight);
+                void main() {
+                    vec2 uv = gl_FragCoord.xy / uResolution.xy;
+                    uv = uv * 2.0 - 1.0;
+                    uv.x *= uResolution.x / uResolution.y;
 
-        // Cores dos Voxels do Hambúrguer
-        const colors = {
-            bun: 0xd97e24,      // Pão (Laranja/Marrom)
-            sesame: 0xffffff,   // Gergelim (Branco)
-            lettuce: 0x3aa63a,  // Alface (Verde)
-            cheese: 0xffcc00,   // Queijo (Amarelo)
-            patty: 0x542d18     // Carne (Marrom escuro)
-        };
+                    float t = uTime * 0.12;
+                    vec3 finalColor = vec3(0.04, 0.06, 0.10); // Base escura elegante
 
-        const voxelSize = 0.45;
-        const gap = 0.03;
-        const step = voxelSize + gap;
+                    // Cores da árvore se misturando ao fundo com inteligência visual
+                    vec3 colLaranja = vec3(0.98, 0.45, 0.09); // #f97316
+                    vec3 colVerde = vec3(0.06, 0.72, 0.51);   // #10b981
+                    vec3 colAzul = vec3(0.23, 0.51, 0.96);    // #3b82f6
 
-        // Matriz 3D do Hambúrguer (Camada por Camada, de baixo para cima)
-        // 0: Vazio, 1: Pão, 2: Gergelim, 3: Alface, 4: Queijo, 5: Carne
-        const burgerMatrix = [
-            // Camada 0: Pão de Baixo
-            [
-                [0,0,0,0,0,0,0],
-                [0,0,1,1,1,0,0],
-                [0,1,1,1,1,1,0],
-                [0,1,1,1,1,1,0],
-                [0,1,1,1,1,1,0],
-                [0,0,1,1,1,0,0],
-                [0,0,0,0,0,0,0]
-            ],
-            // Camada 1: Hambúrguer (Carne)
-            [
-                [0,0,5,5,5,0,0],
-                [0,5,5,5,5,5,0],
-                [5,5,5,5,5,5,5],
-                [5,5,5,5,5,5,5],
-                [5,5,5,5,5,5,5],
-                [0,5,5,5,5,5,0],
-                [0,0,5,5,5,0,0]
-            ],
-            // Camada 2: Queijo Derretido
-            [
-                [0,0,4,4,4,0,0],
-                [0,4,4,4,4,4,0],
-                [4,4,4,4,4,4,4],
-                [4,4,4,4,4,4,4],
-                [4,4,4,4,4,4,4],
-                [0,4,4,4,4,4,0],
-                [0,0,4,4,4,0,0]
-            ],
-            // Camada 3: Alface
-            [
-                [0,3,3,3,3,3,0],
-                [3,3,3,3,3,3,3],
-                [3,3,3,3,3,3,3],
-                [3,3,3,3,3,3,3],
-                [3,3,3,3,3,3,3],
-                [3,3,3,3,3,3,3],
-                [0,3,3,3,3,3,0]
-            ],
-            // Camada 4: Pão de Cima (Base)
-            [
-                [0,0,0,0,0,0,0],
-                [0,1,1,1,1,1,0],
-                [1,1,1,1,1,1,1],
-                [1,1,1,1,1,1,1],
-                [1,1,1,1,1,1,1],
-                [0,1,1,1,1,1,0],
-                [0,0,0,0,0,0,0]
-            ],
-            // Camada 5: Pão de Cima + Gergelim
-            [
-                [0,0,0,0,0,0,0],
-                [0,0,1,1,1,0,0],
-                [0,1,1,2,1,1,0],
-                [0,1,2,1,2,1,0],
-                [0,1,1,2,1,1,0],
-                [0,0,1,1,1,0,0],
-                [0,0,0,0,0,0,0]
-            ],
-            // Camada 6: Topo do Pão
-            [
-                [0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0],
-                [0,0,1,1,1,0,0],
-                [0,0,1,1,1,0,0],
-                [0,0,1,1,1,0,0],
-                [0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0]
-            ]
-        ];
-
-        const hamburgerGroup = new THREE.Group();
-        const geometry = new THREE.BoxGeometry(voxelSize, voxelSize, voxelSize);
-
-        // Materiais Flat (Lambert) para simular estilo pixel art retrô 
-        const materials = {
-            1: new THREE.MeshLambertMaterial({ color: colors.bun }),
-            2: new THREE.MeshLambertMaterial({ color: colors.sesame }),
-            3: new THREE.MeshLambertMaterial({ color: colors.lettuce }),
-            4: new THREE.MeshLambertMaterial({ color: colors.cheese }),
-            5: new THREE.MeshLambertMaterial({ color: colors.patty })
-        };
-
-        // Montagem do hambúrguer bloco por bloco a partir da matriz
-        const dY = burgerMatrix.length;
-        const dZ = burgerMatrix[0].length;
-        const dX = burgerMatrix[0][0].length;
-
-        for (let y = 0; y < dY; y++) {
-            for (let z = 0; z < dZ; z++) {
-                for (let x = 0; x < dX; x++) {
-                    const voxelType = burgerMatrix[y][z][x];
-                    if (voxelType > 0) {
-                        const voxel = new THREE.Mesh(geometry, materials[voxelType]);
-                        // Centraliza os blocos no meio do grupo 3D
-                        voxel.position.x = (x - dX / 2) * step;
-                        voxel.position.y = (y - dY / 2) * step;
-                        voxel.position.z = (z - dZ / 2) * step;
-                        hamburgerGroup.add(voxel);
+                    float f = 0.0;
+                    for(float i=1.0; i<4.0; i++){
+                        f += sin(t * i + uv.y * i * 2.5 + uv.x * (i + sin(t*1.5))) * 0.18;
                     }
+                    
+                    vec3 aurora = mix(colLaranja, colAzul, uv.y * 0.5 + 0.5 + f);
+                    aurora = mix(aurora, colVerde, sin(uv.x * 1.5 + t + f) * 0.5 + 0.5);
+
+                    finalColor += aurora * abs(f) * 0.7;
+                    gl_FragColor = vec4(pow(finalColor, vec3(1.15)), 1.0);
                 }
+            `;
+
+            function createShader(gl, type, source) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                return shader;
             }
+
+            const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+            const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            gl.useProgram(program);
+
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+            const positionLocation = gl.getAttribLocation(program, 'aVertexPosition');
+            gl.enableVertexAttribArray(positionLocation);
+            gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+            const timeLocation = gl.getUniformLocation(program, 'uTime');
+            const resolutionLocation = gl.getUniformLocation(program, 'uResolution');
+
+            function render(time) {
+                gl.uniform1f(timeLocation, time * 0.001);
+                gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
         }
-
-        scene.add(hamburgerGroup);
-
-        // Garante responsividade se redimensionar a tela
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth * pixelScale, window.innerHeight * pixelScale, false);
-        });
-
-        // Loop de Animação
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Rotação suave no próprio eixo
-            hamburgerGroup.rotation.y += 0.025;
-            
-            // Leve balanço vertical (efeito flutuante)
-            hamburgerGroup.position.y = Math.sin(Date.now() * 0.002) * 0.3;
-
-            renderer.render(scene, camera);
-        }
-        
-        animate();
     </script>
 </body>
 </html>
