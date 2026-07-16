@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INTEGRA - Acesso Corporativo</title>
+    <title>INTEGRA - Painel de Controle</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* Reset & Base */
@@ -19,13 +19,22 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: #060a12;
+            background: #060a13;
             display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
-        /* Canvas para o Shader de Aurora Iridescente */
+        /* Área do Fundo Técnico (Lado Esquerdo no PC) */
+        .visual-side {
+            flex: 1.25;
+            position: relative;
+            height: 100%;
+            background: #080f1e;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         #aurora-canvas {
             position: absolute;
             top: 0;
@@ -35,155 +44,126 @@
             z-index: 1;
         }
 
-        /* Container Principal (Responsivo e Ultra Premium) */
-        .wrapper {
+        /* Slogan Discreto no Fundo */
+        .visual-overlay-text {
             position: relative;
-            width: 100%;
-            max-width: 1000px;
-            display: flex;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
-            margin: 20px;
-            z-index: 10;
-        }
-
-        /* Lado Esquerdo: Área da Identidade Visual */
-        .canvas-container {
-            flex: 1.1;
-            position: relative;
-            background: rgba(10, 15, 30, 0.6);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 60px 40px;
-            overflow: hidden;
-        }
-
-        /* Degradê de Vinheta interno */
-        .canvas-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(15, 23, 42, 0) 30%, rgba(15, 23, 42, 0.7) 100%);
             z-index: 2;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            padding: 40px;
             pointer-events: none;
         }
 
-        /* A ÁRVORE COLORIDA VETORIAL (SVG INLINE) */
-        .original-logo {
-            width: 160px;
-            height: 160px;
-            z-index: 5;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 15px 30px rgba(249, 115, 22, 0.35));
-            transform: perspective(800px) rotateY(-5deg);
-            animation: floatTree 4s ease-in-out infinite;
+        .visual-overlay-text h2 {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 24px rgba(0,0,0,0.55);
         }
 
-        @keyframes floatTree {
-            0%, 100% { transform: perspective(800px) rotateY(-5deg) translateY(0); }
-            50% { transform: perspective(800px) rotateY(-5deg) translateY(-8px); }
+        .visual-overlay-text p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.65);
+            max-width: 420px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
-        .brand-info {
+        /* Lado Direito: Coluna de Login Sólida de Cima a Baixo */
+        .login-side {
+            width: 460px;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 45px;
             position: relative;
-            z-index: 5;
-            text-align: center;
+            z-index: 10;
+            box-shadow: -15px 0 50px rgba(0, 0, 0, 0.25);
+            border-left: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        /* Título INTEGRA */
-        .brand-info h1 {
-            color: #ffffff;
-            font-size: 40px;
+        /* Bloco da Identidade Visual no Formulário */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Árvore com Proporção e Altura Corrigidas */
+        .brand-logo {
+            width: 80px;  /* Tamanho otimizado para equilíbrio visual */
+            height: 80px;
+            margin-top: 25px; /* Traz a árvore um pouco para baixo, suavizando o topo */
+            margin-bottom: 8px; /* Agrupa organicamente com o título INTEGRA */
+            filter: drop-shadow(0 6px 12px rgba(249, 115, 22, 0.2));
+        }
+
+        /* Nome INTEGRA Imponente */
+        .brand-title {
+            font-size: 32px;
             font-weight: 800;
             letter-spacing: -0.05em;
-            margin-bottom: 12px;
             background: linear-gradient(135deg, #f97316 0%, #eab308 50%, #10b981 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
         }
 
-        .brand-info p {
-            color: #94a3b8;
-            font-size: 14px;
-            max-width: 320px;
-            line-height: 1.6;
-            margin: 0 auto;
-            font-weight: 400;
-        }
-
-        /* Lado Direito: Formulário de Login (Limpo, Sério e Altamente Legível) */
-        .login-container {
-            flex: 1;
-            background: #ffffff;
-            padding: 70px 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            z-index: 6;
-        }
-
-        .login-header {
-            margin-bottom: 40px;
-        }
-
-        .login-header h2 {
-            font-size: 32px;
-            font-weight: 800;
-            color: #0f172a;
-            letter-spacing: -0.02em;
-        }
-
-        .login-header p {
-            font-size: 15px;
+        .brand-subtitle {
+            font-size: 13.5px;
             color: #64748b;
-            margin-top: 6px;
+            font-weight: 500;
         }
 
-        /* Inputs e Labels */
+        /* Formulário */
+        form {
+            width: 100%;
+        }
+
         .form-group {
-            position: relative;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 600;
             color: #475569;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
+            letter-spacing: 0.01em;
         }
 
+        /* Estilização Premium para Inputs */
         .form-control {
             width: 100%;
-            padding: 16px 18px;
+            padding: 14px 16px;
             font-size: 15px;
             background-color: #f8fafc;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 14px;
+            border: 1px solid #e2e8f0; /* Borda fina padrão luxo */
+            border-radius: 12px;
             color: #0f172a;
             outline: none;
-            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); /* Sutil profundidade */
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .form-control:focus {
             background-color: #ffffff;
             border-color: #2563eb;
-            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.12);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08), 
+                        0 4px 12px rgba(37, 99, 235, 0.03);
         }
 
         .form-options {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 30px;
+            margin-bottom: 26px;
         }
 
         .forgot-password {
@@ -191,7 +171,7 @@
             font-weight: 500;
             color: #2563eb;
             text-decoration: none;
-            transition: color 0.15s;
+            transition: color 0.15s ease;
         }
 
         .forgot-password:hover {
@@ -199,78 +179,84 @@
             text-decoration: underline;
         }
 
-        /* Botão de Ação */
+        /* Botão de Entrada Elegante */
         .btn-submit {
             width: 100%;
-            padding: 16px;
+            padding: 15px;
             background: #2563eb;
             border: none;
-            border-radius: 14px;
+            border-radius: 12px;
             color: #ffffff;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .btn-submit:hover {
             background: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            transform: translateY(-0.5px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
         }
 
         /* Rodapé */
         .footer {
             margin-top: auto;
-            padding-top: 40px;
             text-align: center;
+            padding-top: 30px;
         }
 
         .footer p {
-            font-size: 12px;
+            font-size: 11px;
             color: #94a3b8;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
+            font-weight: 600;
         }
 
         /* --- RESPONSIVIDADE ADAPTATIVA --- */
         @media (max-width: 900px) {
-            .wrapper {
-                max-width: 450px;
-                height: auto;
-                flex-direction: column;
-                margin: 16px;
-                border-radius: 28px;
+            .visual-side {
+                display: none; /* Foca totalmente no login em celulares */
             }
 
-            .canvas-container {
-                padding: 45px 30px;
+            body {
+                background: #ffffff;
+                justify-content: center;
+                align-items: center;
             }
-            
-            .login-container {
-                padding: 45px 30px;
+
+            .login-side {
+                width: 100%;
+                max-width: 420px;
+                height: auto;
+                box-shadow: none;
+                padding: 30px 24px;
+                border-left: none;
             }
-            
-            .original-logo {
-                width: 120px;
-                height: 120px;
-                margin-bottom: 15px;
-            }
-            
-            .brand-info h1 {
-                font-size: 32px;
+
+            .brand-logo {
+                width: 75px;
+                height: 75px;
+                margin-top: 10px;
             }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="aurora-canvas"></canvas>
+    <div class="visual-side">
+        <canvas id="aurora-canvas"></canvas>
+        <div class="visual-overlay-text">
+            <h2>Gestão Integrada</h2>
+            <p>Conectando dados, tecnologia e pessoas em uma única plataforma inteligente de alta performance.</p>
+        </div>
+    </div>
 
-    <div class="wrapper">
-        <div class="canvas-container">
-            
-            <svg class="original-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <div class="login-side">
+        
+        <div class="brand-header">
+            <svg class="brand-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                 <path d="M100 160 C100 135, 96 125, 92 110 C88 95, 85 90, 75 85 C85 82, 92 75, 94 65 C95 75, 100 80, 106 80 C112 80, 118 85, 122 92 C115 98, 110 110, 108 160 Z" fill="#2d3748" />
                 <path d="M92 110 C80 105, 68 105, 58 110 C68 100, 80 98, 90 98 Z" fill="#2d3748" />
                 <path d="M108 110 C120 105, 132 105, 142 110 C132 100, 120 98, 110 98 Z" fill="#2d3748" />
@@ -284,40 +270,31 @@
                 <path d="M125 85 C140 80, 152 68, 145 52 C132 55, 127 70, 125 85 Z" fill="#06b6d4" />
                 <path d="M142 110 C158 105, 170 90, 162 75 C150 80, 145 95, 142 110 Z" fill="#3b82f6" />
             </svg>
-            
-            <div class="brand-info">
-                <h1>INTEGRA</h1>
-                <p>O ecossistema inteligente de gestão administrativa e análise de dados corporativos.</p>
-            </div>
+
+            <h1 class="brand-title">INTEGRA</h1>
+            <p class="brand-subtitle font-weight: 500">Identificação de Usuário</p>
         </div>
 
-        <div class="login-container">
-            <div class="login-header">
-                <h2>Acesso Restrito</h2>
-                <p>Insira suas credenciais administrativas</p>
+        <form onsubmit="event.preventDefault(); alert('Conexão estabelecida com sucesso!');">
+            <div class="form-group">
+                <label for="username">E-mail Corporativo ou Usuário</label>
+                <input type="text" id="username" class="form-control" placeholder="nome@ibrase.com.br ou usuário" required autocomplete="username">
             </div>
 
-            <form onsubmit="event.preventDefault(); alert('Tentativa de conexão enviada!');">
-                <div class="form-group">
-                    <label for="username">Usuário ou E-mail corporativo</label>
-                    <input type="text" id="username" class="form-control" placeholder="ex: nome@ibrase.com.br" required autocomplete="username">
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Senha de segurança</label>
-                    <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
-                </div>
-
-                <div class="form-options">
-                    <a href="#" class="forgot-password">Esqueci minha senha</a>
-                </div>
-
-                <button type="submit" class="btn-submit">Entrar no Sistema</button>
-            </form>
-
-            <div class="footer">
-                <p>© 2026 INTEGRA SYSTEMS. TODOS OS DIREITOS RESERVADOS.</p>
+            <div class="form-group">
+                <label for="password">Senha de Segurança</label>
+                <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
             </div>
+
+            <div class="form-options">
+                <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+            </div>
+
+            <button type="submit" class="btn-submit">Entrar no Sistema</button>
+        </form>
+
+        <div class="footer">
+            <p>© 2026 INTEGRA SYSTEM. TODOS OS DIREITOS RESERVADOS.</p>
         </div>
     </div>
 
@@ -326,47 +303,69 @@
         const gl = canvas.getContext('webgl');
 
         if (!gl) {
-            document.body.style.background = "#060a12";
+            document.querySelector('.visual-side').style.background = "#080f1e";
         }
 
+        // Variáveis de controle para o Efeito Parallax Reativo ao Mouse
+        let mouseX = 0, mouseY = 0;
+        let targetMouseX = 0, targetMouseY = 0;
+
+        window.addEventListener('mousemove', (event) => {
+            // Normaliza as coordenadas do mouse de -1.0 a 1.0
+            targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
         function resizeCanvas() {
-            canvas.width = window.innerWidth * window.devicePixelRatio;
-            canvas.height = window.innerHeight * window.devicePixelRatio;
+            canvas.width = canvas.parentElement.clientWidth * window.devicePixelRatio;
+            canvas.height = canvas.parentElement.clientHeight * window.devicePixelRatio;
             if (gl) gl.viewport(0, 0, canvas.width, canvas.height);
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
         if (gl) {
-            const vsSource = `attribute vec4 aVertexPosition; void main() { gl_Position = aVertexPosition; }`;
+            const vsSource = `
+                attribute vec4 aVertexPosition; 
+                void main() { 
+                    gl_Position = aVertexPosition; 
+                }
+            `;
+            
             const fsSource = `
                 precision highp float;
                 uniform float uTime;
                 uniform vec2 uResolution;
+                uniform vec2 uMouse;
 
                 void main() {
+                    // Aplica o deslocamento do mouse para criar o efeito de paralaxe tridimensional
+                    vec2 mouseOffset = uMouse * 0.08; 
                     vec2 uv = gl_FragCoord.xy / uResolution.xy;
                     uv = uv * 2.0 - 1.0;
                     uv.x *= uResolution.x / uResolution.y;
+                    uv -= mouseOffset; 
 
-                    float t = uTime * 0.12;
-                    vec3 finalColor = vec3(0.04, 0.06, 0.10); // Base escura elegante
+                    // Velocidade reduzida para 0.04 (Suave como seda, profissional e nada cansativo)
+                    float t = uTime * 0.04; 
+                    vec3 finalColor = vec3(0.02, 0.04, 0.09); // Tom escuro corporativo profundo
 
-                    // Cores da árvore se misturando ao fundo com inteligência visual
+                    // Paleta sofisticada baseada nas cores da Árvore Ibrase
                     vec3 colLaranja = vec3(0.98, 0.45, 0.09); // #f97316
                     vec3 colVerde = vec3(0.06, 0.72, 0.51);   // #10b981
-                    vec3 colAzul = vec3(0.23, 0.51, 0.96);    // #3b82f6
+                    vec3 colAzul = vec3(0.14, 0.42, 0.88);    // #2563eb
 
                     float f = 0.0;
                     for(float i=1.0; i<4.0; i++){
-                        f += sin(t * i + uv.y * i * 2.5 + uv.x * (i + sin(t*1.5))) * 0.18;
+                        f += sin(t * i + uv.y * i * 2.2 + uv.x * (i + sin(t * 1.2))) * 0.15;
                     }
                     
                     vec3 aurora = mix(colLaranja, colAzul, uv.y * 0.5 + 0.5 + f);
-                    aurora = mix(aurora, colVerde, sin(uv.x * 1.5 + t + f) * 0.5 + 0.5);
+                    aurora = mix(aurora, colVerde, sin(uv.x * 1.2 + t + f) * 0.5 + 0.5);
 
-                    finalColor += aurora * abs(f) * 0.7;
-                    gl_FragColor = vec4(pow(finalColor, vec3(1.15)), 1.0);
+                    // Fusão harmônica das cores
+                    finalColor += aurora * abs(f) * 0.6;
+                    gl_FragColor = vec4(pow(finalColor, vec3(1.2)), 1.0);
                 }
             `;
 
@@ -395,10 +394,16 @@
 
             const timeLocation = gl.getUniformLocation(program, 'uTime');
             const resolutionLocation = gl.getUniformLocation(program, 'uResolution');
+            const mouseLocation = gl.getUniformLocation(program, 'uMouse');
 
             function render(time) {
+                // Interpolação Linear (LERP) para suavizar o movimento do mouse no 3D
+                mouseX += (targetMouseX - mouseX) * 0.05;
+                mouseY += (targetMouseY - mouseY) * 0.05;
+
                 gl.uniform1f(timeLocation, time * 0.001);
                 gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+                gl.uniform2f(mouseLocation, mouseX, mouseY);
                 gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
                 requestAnimationFrame(render);
             }
