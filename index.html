@@ -94,25 +94,123 @@
             align-items: center;
         }
 
-        /* Árvore com Proporção e Altura Corrigidas */
+        /* Árvore com Proporção, Flutuação e Efeitos de Transição */
         .brand-logo {
-            width: 80px;  /* Tamanho otimizado para equilíbrio visual */
+            width: 80px;
             height: 80px;
-            margin-top: 25px; /* Traz a árvore um pouco para baixo, suavizando o topo */
-            margin-bottom: 8px; /* Agrupa organicamente com o título INTEGRA */
+            margin-top: 25px;
+            margin-bottom: 8px;
             filter: drop-shadow(0 6px 12px rgba(249, 115, 22, 0.2));
+            animation: treeFloat 6s ease-in-out infinite;
         }
 
-        /* Nome INTEGRA Imponente */
+        /* Flutuação suave da árvore */
+        @keyframes treeFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        /* --- ANIMAÇÃO DAS FOLHAS DO SVG --- */
+        .brand-logo path {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: center;
+        }
+
+        /* Balanço de vento para as folhas */
+        @keyframes leafSway {
+            0%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(3.5deg) scale(1.03);
+            }
+        }
+
+        /* Brilho pulsante suave para as luzes (folhas coloridas) com troca dinâmica de cores e balanço */
+        @keyframes leafPulseAndColor {
+            0%, 100% {
+                opacity: 0.95;
+                filter: drop-shadow(0 0 2px var(--glow-color)) hue-rotate(0deg);
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                opacity: 1;
+                filter: drop-shadow(0 0 10px var(--glow-color)) hue-rotate(60deg);
+                transform: rotate(3.5deg) scale(1.05);
+            }
+        }
+
+        /* Associações de animação específicas com pequenos atrasos (delays) para naturalidade */
+        .leaf-lime {
+            --glow-color: #a3e635;
+            animation: leafPulseAndColor 5s ease-in-out infinite;
+            transform-origin: 50% 25%;
+        }
+        .leaf-green {
+            --glow-color: #10b981;
+            animation: leafPulseAndColor 4.5s ease-in-out infinite 0.8s;
+            transform-origin: 60% 35%;
+        }
+        .leaf-cyan {
+            --glow-color: #06b6d4;
+            animation: leafPulseAndColor 5.8s ease-in-out infinite 1.6s;
+            transform-origin: 70% 50%;
+        }
+        .leaf-blue {
+            --glow-color: #3b82f6;
+            animation: leafPulseAndColor 5.2s ease-in-out infinite 2.4s;
+            transform-origin: 80% 65%;
+        }
+        .leaf-orange {
+            --glow-color: #f97316;
+            animation: leafPulseAndColor 4.2s ease-in-out infinite 0.4s;
+            transform-origin: 40% 35%;
+        }
+        .leaf-darkorange {
+            --glow-color: #ea580c;
+            animation: leafPulseAndColor 5.5s ease-in-out infinite 1.2s;
+            transform-origin: 30% 50%;
+        }
+        .leaf-yellow {
+            --glow-color: #eab308;
+            animation: leafPulseAndColor 6s ease-in-out infinite 2s;
+            transform-origin: 20% 65%;
+        }
+
+        /* Efeito Hover Individual Interativo para as Folhas */
+        .brand-logo path.leaf-lime:hover { transform: scale(1.15) translateY(-2px); filter: drop-shadow(0 0 12px #a3e635); cursor: pointer; }
+        .brand-logo path.leaf-green:hover { transform: scale(1.15) translateY(-2px); filter: drop-shadow(0 0 12px #10b981); cursor: pointer; }
+        .brand-logo path.leaf-cyan:hover { transform: scale(1.15) translateY(-2px); filter: drop-shadow(0 0 12px #06b6d4); cursor: pointer; }
+        .brand-logo path.leaf-blue:hover { transform: scale(1.15) translateY(-2px); filter: drop-shadow(0 0 12px #3b82f6); cursor: pointer; }
+        .brand-logo path.leaf-orange:hover { transform: scale(1.15) translateY(-2px); filter: drop-shadow(0 0 12px #f97316); cursor: pointer; }
+        .brand-logo path.leaf-darkorange:hover { transform: scale(1.15) translateY(-2px); filter: drop-shadow(0 0 12px #ea580c); cursor: pointer; }
+        .brand-logo path.leaf-yellow:hover { transform: scale(1.15) translateY(-2px); filter: drop-shadow(0 0 12px #eab308); cursor: pointer; }
+
+        /* Nome INTEGRA Imponente com Gradiente Animado (Shine/Aurora) */
         .brand-title {
             font-size: 32px;
             font-weight: 800;
             letter-spacing: -0.05em;
-            background: linear-gradient(135deg, #f97316 0%, #eab308 50%, #10b981 100%);
+            background: linear-gradient(120deg, #f97316 0%, #eab308 25%, #10b981 50%, #06b6d4 75%, #f97316 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 4px;
+            animation: shineGradient 5s linear infinite;
+        }
+
+        @keyframes shineGradient {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
         }
 
         .brand-subtitle {
@@ -216,28 +314,46 @@
 
         /* --- RESPONSIVIDADE ADAPTATIVA --- */
         @media (max-width: 900px) {
-            .visual-side {
-                display: none; /* Foca totalmente no login em celulares */
-            }
-
             body {
-                background: #ffffff;
+                background: #060a13;
                 justify-content: center;
                 align-items: center;
+                position: relative;
+            }
+
+            .visual-side {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                display: flex;
+            }
+
+            .visual-overlay-text {
+                display: none; /* Oculta o slogan grande para caber melhor na tela do celular */
             }
 
             .login-side {
-                width: 100%;
-                max-width: 420px;
+                width: 90%;
+                max-width: 400px;
                 height: auto;
-                box-shadow: none;
-                padding: 30px 24px;
+                background: rgba(255, 255, 255, 0.94); /* Glassmorphism premium translúcido */
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                border-radius: 24px;
+                padding: 35px 25px;
+                box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+                position: relative;
+                z-index: 10;
                 border-left: none;
             }
 
             .brand-logo {
-                width: 75px;
-                height: 75px;
+                width: 72px;
+                height: 72px;
                 margin-top: 10px;
             }
         }
@@ -257,22 +373,24 @@
         
         <div class="brand-header">
             <svg class="brand-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Tronco e Galhos -->
                 <path d="M100 160 C100 135, 96 125, 92 110 C88 95, 85 90, 75 85 C85 82, 92 75, 94 65 C95 75, 100 80, 106 80 C112 80, 118 85, 122 92 C115 98, 110 110, 108 160 Z" fill="#2d3748" />
                 <path d="M92 110 C80 105, 68 105, 58 110 C68 100, 80 98, 90 98 Z" fill="#2d3748" />
                 <path d="M108 110 C120 105, 132 105, 142 110 C132 100, 120 98, 110 98 Z" fill="#2d3748" />
                 
-                <path d="M92 65 C80 58, 70 42, 80 28 C92 35, 96 50, 92 65 Z" fill="#f97316" />
-                <path d="M75 85 C60 80, 48 68, 55 52 C68 55, 73 70, 75 85 Z" fill="#ea580c" />
-                <path d="M58 110 C42 105, 30 90, 38 75 C50 80, 55 95, 58 110 Z" fill="#eab308" />
+                <!-- Luzinhas / Folhinhas Coloridas com Classes de Animação -->
+                <path class="leaf-orange" d="M92 65 C80 58, 70 42, 80 28 C92 35, 96 50, 92 65 Z" fill="#f97316" />
+                <path class="leaf-darkorange" d="M75 85 C60 80, 48 68, 55 52 C68 55, 73 70, 75 85 Z" fill="#ea580c" />
+                <path class="leaf-yellow" d="M58 110 C42 105, 30 90, 38 75 C50 80, 55 95, 58 110 Z" fill="#eab308" />
                 
-                <path d="M100 50 C100 32, 92 20, 100 8 C108 20, 108 32, 100 50 Z" fill="#a3e635" />
-                <path d="M108 65 C120 58, 130 42, 120 28 C108 35, 104 50, 108 65 Z" fill="#10b981" />
-                <path d="M125 85 C140 80, 152 68, 145 52 C132 55, 127 70, 125 85 Z" fill="#06b6d4" />
-                <path d="M142 110 C158 105, 170 90, 162 75 C150 80, 145 95, 142 110 Z" fill="#3b82f6" />
+                <path class="leaf-lime" d="M100 50 C100 32, 92 20, 100 8 C108 20, 108 32, 100 50 Z" fill="#a3e635" />
+                <path class="leaf-green" d="M108 65 C120 58, 130 42, 120 28 C108 35, 104 50, 108 65 Z" fill="#10b981" />
+                <path class="leaf-cyan" d="M125 85 C140 80, 152 68, 145 52 C132 55, 127 70, 125 85 Z" fill="#06b6d4" />
+                <path class="leaf-blue" d="M142 110 C158 105, 170 90, 162 75 C150 80, 145 95, 142 110 Z" fill="#3b82f6" />
             </svg>
 
             <h1 class="brand-title">INTEGRA</h1>
-            <p class="brand-subtitle font-weight: 500">Identificação de Usuário</p>
+            <p class="brand-subtitle">Identificação de Usuário</p>
         </div>
 
         <form onsubmit="event.preventDefault(); alert('Conexão estabelecida com sucesso!');">
@@ -306,7 +424,7 @@
             document.querySelector('.visual-side').style.background = "#080f1e";
         }
 
-        // Variáveis de controle para o Efeito Parallax Reativo ao Mouse
+        // Variáveis de controle para o Efeito Parallax Reativo ao Mouse e Touch
         let mouseX = 0, mouseY = 0;
         let targetMouseX = 0, targetMouseY = 0;
 
@@ -316,9 +434,20 @@
             targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
         });
 
+        // Suporte para interação touch no celular (arrastar o dedo altera a paralaxe)
+        window.addEventListener('touchmove', (event) => {
+            if (event.touches.length > 0) {
+                const touch = event.touches[0];
+                targetMouseX = (touch.clientX / window.innerWidth) * 2 - 1;
+                targetMouseY = -(touch.clientY / window.innerHeight) * 2 + 1;
+            }
+        }, { passive: true });
+
         function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth * window.devicePixelRatio;
-            canvas.height = canvas.parentElement.clientHeight * window.devicePixelRatio;
+            // Limita o DPI máximo em 1.5 em telas de retina / celulares para excelente desempenho de GPU
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            canvas.width = canvas.parentElement.clientWidth * dpr;
+            canvas.height = canvas.parentElement.clientHeight * dpr;
             if (gl) gl.viewport(0, 0, canvas.width, canvas.height);
         }
         window.addEventListener('resize', resizeCanvas);
